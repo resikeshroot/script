@@ -4,11 +4,18 @@
 sudo apt update
 
 # Install required dependencies
-sudo apt install wget curl flatpak unzip
+sudo apt install wget curl flatpak unzip software-properties-common -y
+
+# Add Stacer repository
+sudo add-apt-repository ppa:oguzhaninan/stacer -y
+sudo apt update
+
+# Install Stacer
+sudo apt install stacer -y
 
 # Define functions to check package status
 function is_installed() {
-  dpkg query -l "$1" | grep -q installed
+  dpkg -l "$1" &>/dev/null
 }
 
 function is_flatpak_installed() {
@@ -38,8 +45,9 @@ fi
 
 if ! is_installed vlc; then
   echo "VLC media player is not installed. Installing..."
-  sudo apt install vlc
+  sudo apt install vlc -y
 fi
 
 echo "All checked applications are either already installed or have been installed successfully!"
+
 
