@@ -48,6 +48,17 @@ if ! is_installed vlc; then
   sudo apt install vlc -y
 fi
 
+# **Install telegram-upload with user privileges (avoid sudo)**
+echo "Installing telegram-upload..."
+python3 -m pip install --user telegram-upload
+
+# Alternative: Install using a virtual environment (recommended for isolation)
+# python3 -m venv telegram_upload_env
+# source telegram_upload_env/bin/activate
+# pip install telegram-upload
+# deactivate
+
 echo "All checked applications are either already installed or have been installed successfully!"
+
 
 
