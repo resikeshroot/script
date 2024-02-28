@@ -1,64 +1,38 @@
 #!/bin/bash
 
 # Update package lists
-sudo apt update
-
-# Install required dependencies
-sudo apt install wget curl flatpak unzip software-properties-common -y
-
-# Add Stacer repository
-sudo add-apt-repository ppa:oguzhaninan/stacer -y
-sudo apt update
-
-# Install Stacer
-sudo apt install stacer -y
+sudo dnf update
 
 # Define functions to check package status
 function is_installed() {
-  dpkg -l "$1" &>/dev/null
-}
-
-function is_flatpak_installed() {
-  flatpak list | grep -q "^$1$"
+  dnf list installed | grep -q "$1"
 }
 
 # Check if packages are installed
-if ! is_installed opera-stable; then
+if ! is_installed opera; then
   echo "Opera Mini is not installed. Installing..."
-  # Installation code for Opera Mini remains the same
+  sudo dnf install opera
 fi
 
-if ! is_installed vmware-workstation-player; then
+if ! is_installed "VMware Workstation Player"; then
   echo "VMware Workstation Player is not installed. Installing..."
-  # Installation code for VMware Workstation Player remains the same
+  # Download and install instructions specific to Fedora are required here. Refer to VMware's official documentation for details.
 fi
 
-if ! is_flatpak_installed code; then
+if ! is_installed code; then
   echo "Visual Studio Code is not installed. Installing..."
-  # Installation code for Visual Studio Code remains the same
+  sudo dnf install code
 fi
 
 if ! is_installed wireshark; then
   echo "Wireshark is not installed. Installing..."
-  # Installation code for Wireshark remains the same
+  sudo dnf install wireshark
 fi
 
 if ! is_installed vlc; then
   echo "VLC media player is not installed. Installing..."
-  sudo apt install vlc -y
+  sudo dnf install vlc
 fi
 
-# **Install telegram-upload with user privileges (avoid sudo)**
-echo "Installing telegram-upload..."
-python3 -m pip install --user telegram-upload
-
-# Alternative: Install using a virtual environment (recommended for isolation)
-# python3 -m venv telegram_upload_env
-# source telegram_upload_env/bin/activate
-# pip install telegram-upload
-# deactivate
-
 echo "All checked applications are either already installed or have been installed successfully!"
-
-
 
